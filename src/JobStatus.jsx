@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
+import { REACT_APP_API_URL } from "./config";
 
 function JobStatus({ jobId }) {
+  console.log("JobStatus component received jobId:", jobId);
+
   const [jobDetails, setJobDetails] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -18,7 +21,7 @@ function JobStatus({ jobId }) {
 
       try {
         const response = await axios.get(
-          `http://localhost:3000/jobs?jobId=${jobId}`
+          `${REACT_APP_API_URL}/jobs?jobId=${jobId}`
         );
         setJobDetails(response.data);
 
@@ -103,10 +106,7 @@ function JobStatus({ jobId }) {
                     <h5>Entreprises Liées:</h5>
                     {director.entreprises.map((entreprise, idx) => (
                       <div key={idx}>
-                        <p>
-                          Nom de l'entreprise:{" "}
-                          {entreprise.nom_entreprise}
-                        </p>
+                        <p>Nom de l'entreprise: {entreprise.nom_entreprise}</p>
                         <p>SIREN: {entreprise.siren}</p>
                         <p>Domaine d'activité: {entreprise.domaine_activite}</p>
                       </div>
