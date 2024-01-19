@@ -30,7 +30,7 @@ function SirenForm({ onJobIdUpdate }) {
     setShowMatrixRain(true);
 
     try {
-      const response = await axios.get(`${REACT_APP_API_URL}/entreprise`, {
+      const response = await axios.get(`http://localhost:3000/entreprise`, {
         params: { siren: siren },
       });
 
@@ -71,8 +71,8 @@ function SirenForm({ onJobIdUpdate }) {
             required
           />
         </div>
-{/* 
-        <button
+
+        {/* <button
           onClick={handleMatrixButtonClick}
           className='btn btn-secondary me-2'>
           Déclencher la Pluie de Code

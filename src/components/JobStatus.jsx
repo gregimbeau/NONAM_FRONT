@@ -18,7 +18,7 @@ function JobStatus({ jobId }) {
 
       try {
         const response = await axios.get(
-          `${REACT_APP_API_URL}/jobs?jobId=${jobId}`
+          `http://localhost:3000/jobs?jobId=${jobId}`
         );
         setJobDetails(response.data);
         if (response.data.status === "Completed") {

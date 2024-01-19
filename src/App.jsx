@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Navbar from "./components/Navbar";
 import SirenForm from "./components/SirenForm";
+import JobStatus from "./components/JobStatus"; 
 import "./css/App.css";
 
 function App() {
