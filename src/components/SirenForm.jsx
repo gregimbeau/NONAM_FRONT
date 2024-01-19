@@ -30,7 +30,7 @@ function SirenForm({ onJobIdUpdate }) {
     setShowMatrixRain(true);
 
     try {
-      const response = await axios.get(`http://localhost:3000/entreprise`, {
+      const response = await axios.get(`${REACT_APP_API_URL}/entreprise`, {
         params: { siren: siren },
       });
 
