@@ -48,6 +48,10 @@ h1 {
     background-color: #f9f9f9;
   }
 }
+.content {
+    margin-top: 8%;
+    padding: 20px;
+}
 
 .error-message {
     color: #ff0000; 

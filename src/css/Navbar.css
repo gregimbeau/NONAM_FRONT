@@ -1,11 +1,32 @@
-/* In Navbar.css */
 .navbar {
-  background-color: #333;
-  color: white;
-  padding: 10px 20px;
-  text-align: center;
+    height: 80px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #333;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+.navbar h1 {
+    font-size: 1.5em; /* Taille par défaut */
+    margin: 0;
+    padding: 0 20px; /* Assurez-vous que le titre ne touche pas les bords */
 }
 
-.navbar h1 {
-  margin: 0;
+/* Petits écrans, par exemple moins de 768px */
+@media (max-width: 768px) {
+    .navbar h1 {
+        font-size: 1.2em; /* Taille de police plus petite */
+    }
+}
+
+/* Très petits écrans, par exemple moins de 480px */
+@media (max-width: 480px) {
+    .navbar h1 {
+        font-size: 1em; /* Encore plus petit pour les petits appareils */
+    }
 }

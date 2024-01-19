@@ -3,7 +3,7 @@ import "../css/Navbar.css";
 function Navbar() {
   return (
     <nav className='navbar'>
-      <h1>Welcome to My App</h1>
+      <h1>GUILLAUME // NONAM TEST TECHNIQUE</h1>
     </nav>
   );
 }

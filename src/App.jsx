@@ -16,6 +16,7 @@ function App() {
       <div className='content'>
         <h1>Company Information Fetcher</h1>
         <SirenForm onJobIdUpdate={handleJobIdUpdate} jobId={jobId} />
+        {jobId && <JobStatus jobId={jobId} />}
       </div>
     </div>
   );
