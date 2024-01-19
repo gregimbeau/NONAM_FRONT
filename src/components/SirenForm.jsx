@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
 import JobStatus from "./JobStatus";
+import MatrixRain from "./MatrixRain";
 import { REACT_APP_API_URL } from "../config";
 
 function SirenForm({ onJobIdUpdate }) {
@@ -9,6 +10,12 @@ function SirenForm({ onJobIdUpdate }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [jobId, setJobId] = useState(null);
+  const [showMatrixRain, setShowMatrixRain] = useState(false);
+
+  const handleMatrixButtonClick = () => {
+    setShowMatrixRain(true);
+    setTimeout(() => setShowMatrixRain(false), 1000); // Arrête l'effet après 5 secondes
+  };
 
   // Handles preset SIREN numbers for quick testing
   const handlePresetSiren = async (siren) => {
@@ -20,6 +27,7 @@ function SirenForm({ onJobIdUpdate }) {
   const trySubmit = async (siren) => {
     setError("");
     setLoading(true);
+    setShowMatrixRain(true);
 
     try {
       const response = await axios.get(`${REACT_APP_API_URL}/entreprise`, {
@@ -36,6 +44,7 @@ function SirenForm({ onJobIdUpdate }) {
       console.error("Error fetching company details:", error);
     } finally {
       setLoading(false);
+      setShowMatrixRain(false);
     }
   };
 
@@ -47,6 +56,7 @@ function SirenForm({ onJobIdUpdate }) {
 
   return (
     <div>
+      {showMatrixRain && <MatrixRain />} {/* Affiche la pluie de code Matrix */}
       <form onSubmit={handleSubmit}>
         <div className='mb-3'>
           <label htmlFor='sirenNumber' className='form-label'>
@@ -61,11 +71,19 @@ function SirenForm({ onJobIdUpdate }) {
             required
           />
         </div>
+{/* 
+        <button
+          onClick={handleMatrixButtonClick}
+          className='btn btn-secondary me-2'>
+          Déclencher la Pluie de Code
+        </button> */}
+
         <button type='submit' className='btn btn-primary' disabled={loading}>
           {loading ? "Loading..." : "Fetch Company"}
         </button>
+
+        {/* Boutons SIREN prédéfinis */}
         <div className='mt-3'>
-          {/* Preset SIREN buttons for quick access */}
           <button
             className='btn btn-secondary me-2'
             onClick={() => handlePresetSiren("911872695")}>
