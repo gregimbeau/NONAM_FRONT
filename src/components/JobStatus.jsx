@@ -17,9 +17,10 @@ function JobStatus({ jobId }) {
       setError("");
 
       try {
-        const response = await axios.get(
-          `${REACT_APP_API_URL}/jobs?jobId=${jobId}`
-        );
+        const response = await axios.get(`${REACT_APP_API_URL}/pappers/jobs`, {
+          params: { jobId },
+        });
+
         setJobDetails(response.data);
         if (response.data.status === "Completed") {
           clearInterval(intervalId);

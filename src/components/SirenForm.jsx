@@ -30,9 +30,12 @@ function SirenForm({ onJobIdUpdate }) {
     setShowMatrixRain(true);
 
     try {
-      const response = await axios.get(`${REACT_APP_API_URL}/entreprise`, {
-        params: { siren: siren },
-      });
+      const response = await axios.get(
+        `${REACT_APP_API_URL}/pappers/entreprise`,
+        {
+          params: { siren: siren },
+        }
+      );
 
       console.log("Received job ID:", response.data.jobId);
       setJobId(response.data.jobId);
