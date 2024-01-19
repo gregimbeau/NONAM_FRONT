@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Navbar from "./Navbar";
-import SirenForm from "./SirenForm";
-import "./App.css";
+import Navbar from "./components/Navbar";
+import SirenForm from "./components/SirenForm";
+import "./css/App.css";
 
 function App() {
   const [jobId, setJobId] = useState(null);

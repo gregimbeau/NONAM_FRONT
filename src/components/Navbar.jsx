@@ -1,4 +1,4 @@
-import "./Navbar.css"; // Assuming you will create a separate CSS file for styling
+import "../css/Navbar.css";
 
 function Navbar() {
   return (

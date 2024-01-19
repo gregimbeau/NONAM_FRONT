@@ -1,11 +1,10 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
-import { REACT_APP_API_URL } from "./config";
+import { REACT_APP_API_URL } from "../config";
+import "../css/JobStatus.css";
 
 function JobStatus({ jobId }) {
-  console.log("JobStatus component received jobId:", jobId);
-
   const [jobDetails, setJobDetails] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -14,8 +13,6 @@ function JobStatus({ jobId }) {
     let intervalId;
 
     const fetchJobDetails = async () => {
-      if (!jobId) return;
-
       setLoading(true);
       setError("");
 
@@ -24,13 +21,22 @@ function JobStatus({ jobId }) {
           `${REACT_APP_API_URL}/jobs?jobId=${jobId}`
         );
         setJobDetails(response.data);
-
         if (response.data.status === "Completed") {
           clearInterval(intervalId);
         }
-      } catch (error) {
-        setError("Failed to fetch job details.");
-        console.error("Error fetching job details:", error);
+      } catch (err) {
+        // Log or development/debugging purposes
+        console.error("Error occurred while fetching job details:", err);
+
+        // Specific error handling
+        if (!err.response) {
+          setError("Network error, please check your internet connection.");
+        } else if (err.response.status === 404) {
+          setError("Job details not found.");
+        } else {
+          // Fallback error message
+          setError("An unexpected error occurred. Please try again later.");
+        }
       } finally {
         setLoading(false);
       }
@@ -51,8 +57,6 @@ function JobStatus({ jobId }) {
   if (error) {
     return <div style={{ color: "red" }}>{error}</div>;
   }
-
-  console.log("Directors Details:", jobDetails?.data?.directorsDetails);
 
   const directors = jobDetails?.data?.directorsDetails?.resultats;
 
@@ -84,7 +88,8 @@ function JobStatus({ jobId }) {
   };
 
   return (
-    <div>
+    <div className='job-status-container'>
+      {error && <div className='error-message'>{error}</div>}
       {jobDetails ? (
         <div>
           <h3>Job Status: {jobDetails.status}</h3>
@@ -93,19 +98,13 @@ function JobStatus({ jobId }) {
               <div>
                 <h4>Dirigeants:</h4>
                 {directors.map((director, index) => (
-                  <div
-                    key={index}
-                    style={{
-                      border: "1px solid black",
-                      margin: "10px",
-                      padding: "10px",
-                    }}>
+                  <div key={index} className='director-card'>
                     <p>Qualités: {director.qualites.join(", ")}</p>
                     <p>Nom: {director.nom}</p>
                     <p>Prénom: {director.prenom}</p>
                     <h5>Entreprises Liées:</h5>
                     {director.entreprises.map((entreprise, idx) => (
-                      <div key={idx}>
+                      <div key={idx} className='director-details'>
                         <p>Nom de l'entreprise: {entreprise.nom_entreprise}</p>
                         <p>SIREN: {entreprise.siren}</p>
                         <p>Domaine d'activité: {entreprise.domaine_activite}</p>
@@ -117,12 +116,7 @@ function JobStatus({ jobId }) {
             )}
             <h4>Company Details:</h4>
 
-            <div
-              style={{
-                border: "1px solid black",
-                margin: "10px",
-                padding: "10px",
-              }}>
+            <div className='company-details-card'>
               {renderCompanyDetails(jobDetails.data.companyDetails)}
             </div>
           </div>
